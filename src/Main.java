@@ -30,9 +30,9 @@ public class Main {
         manager.printAllTasks();
 
         //2. получение задачи/подзадачи/эпика
-        System.out.println("Все таски: \n" + manager.getTask());
+        System.out.println("Все таски: \n" + manager.getTasks());
         System.out.println("Все эпики: \n" + manager.getEpics());
-        System.out.println("Все сабтаски: \n" + manager.getSubtask());
+        System.out.println("Все сабтаски: \n" + manager.getSubtasks());
         System.out.println("Поиск таска по ID: \n" + manager.findTaskById(3));
         System.out.println("Поиск таска по ID: \n" + manager.findTaskById(1));
         System.out.println("Поиск эпика по ID: \n" + manager.findEpicById(4));

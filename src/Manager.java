@@ -88,7 +88,7 @@ public class Manager {
     }
 
 
-    public ArrayList<Task> getTask() {
+    public ArrayList<Task> getTasks() {
         ArrayList<Task> task = new ArrayList<Task>(tasks.values());
         return task;
     }
@@ -98,39 +98,21 @@ public class Manager {
         return epic;
     }
 
-    public ArrayList<Subtask> getSubtask() {
+    public ArrayList<Subtask> getSubtasks() {
         ArrayList<Subtask> subtask = new ArrayList<Subtask>(subTasks.values());
         return subtask;
     }
 
     public Task findTaskById(int id) {
-        ArrayList<Task> task = getTask();
-        for (Task everyTask : task) {
-            if (everyTask.getId() == id) {
-                return everyTask;
-            }
-        }
-        return null;
+        return tasks.get(id);
     }
 
     public Epic findEpicById(int id) {
-        ArrayList<Epic> epic = getEpics();
-        for (Epic everyEpic : epic) {
-            if (everyEpic.getId() == id) {
-                return everyEpic;
-            }
-        }
-        return null;
+        return epics.get(id);
     }
 
     public Subtask findSubtaskById(int id) {
-        ArrayList<Subtask> subtask = getSubtask();
-        for (Subtask everySubtask : subtask) {
-            if (everySubtask.getId() == id) {
-                return everySubtask;
-            }
-        }
-        return null;
+        return subTasks.get(id);
     }
 
 
