@@ -1,8 +1,9 @@
+import manager.*;
 
 public class Main {
     public static void main(String[] args) {
 
-        Manager manager = new Manager();
+        TaskManager manager = Managers.getDefault();
 
         Task task1 = new Task("Task1", "Desc1", Status.NEW);
         Task task2 = new Task("Task2", "Desc2", Status.IN_PROGRESS);
@@ -27,7 +28,7 @@ public class Main {
 
         //ВСЕ МЕТОДЫ ПОЛУЧЕНИЯ ДАННЫХ
         //1. вывод всех задач/подзадач/эпиков
-        manager.printAllTasks();
+        InMemoryTaskManager.printAllTasks(manager);
 
         //2. получение задачи/подзадачи/эпика
         System.out.println("Все таски: \n" + manager.getTasks());
@@ -49,11 +50,11 @@ public class Main {
 
         //1. обновление таска
         System.out.println("До обновления:");
-        manager.printAllTasks();
+        InMemoryTaskManager.printAllTasks(manager);
         Task task4 = new Task(1, "task1", "desc1.2", Status.DONE);
         manager.updateTask(task4);
         System.out.println("После обновления:");
-        manager.printAllTasks();
+        InMemoryTaskManager.printAllTasks(manager);
 
         //2. обновление статуса подзадачи/эпика
         manager.updateSubtask(new Subtask(7, "subtask7", "desc7", Status.IN_PROGRESS, 4));
@@ -62,24 +63,24 @@ public class Main {
 
         //ВСЕ МЕТОДЫ УДАЛЕНИЯ
         //1. удаление
-        manager.printAllTasks();
+        InMemoryTaskManager.printAllTasks(manager);
         manager.deleteTaskById(1); //удаление таска по Айди
-        manager.printAllTasks(); //проверка вывода
+        InMemoryTaskManager.printAllTasks(manager);//проверка вывода
         manager.deleteAllTasks(); //удаление всех тасков
-        manager.printAllTasks(); //проверка вывода
+        InMemoryTaskManager.printAllTasks(manager);
 
         manager.deleteSubtaskById(7); //удаление сабтасков по Айди и обновление статуса эпика
-        manager.printAllTasks();
+        InMemoryTaskManager.printAllTasks(manager);
         manager.deleteAllSubtasks(); //удаление всех сабтасков
-        manager.printAllTasks();
+        InMemoryTaskManager.printAllTasks(manager);
 
 
         manager.deleteEpicById(4); //удаление эпика по айди
-        manager.printAllTasks();
+        InMemoryTaskManager.printAllTasks(manager);
 
 
         manager.deleteAllEpics(); //удаление всех эпиков
-        manager.printAllTasks();
+        InMemoryTaskManager.printAllTasks(manager);
 
 
 

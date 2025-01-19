@@ -1,5 +1,17 @@
+package manager;
+import java.util.Objects;
+
 public class Task {
     protected Integer id;
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     protected String taskName;
     protected String description;
     protected Status status;
@@ -35,6 +47,19 @@ public class Task {
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);  // возвращаем хэш по id
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;  // если ссылки одинаковые
+        if (o == null || getClass() != o.getClass()) return false;  // если объекты разных типов
+        Task task = (Task) o;  // приводим объект к типу Task
+        return Objects.equals(id, task.id);  // сравниваем id
     }
 
     public Status getStatus() {
