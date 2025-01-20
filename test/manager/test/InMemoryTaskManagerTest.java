@@ -19,7 +19,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void tastAddTask(){
+    public void taskAddTask(){
         Task task1 = new Task(1, "task1", "desc1", Status.NEW);
         manager.addNewTask(task1);
         Assertions.assertEquals(1, manager.getTasks().size(), "Таск не добавлен");
@@ -29,7 +29,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void CheckNotChangeAfterAddNewTask(){
+    public void checkNotChangeAfterAddNewTask(){
         int id=1;
         String name = "Task1";
         String desc = "dec1";

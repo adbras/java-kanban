@@ -1,6 +1,7 @@
 package manager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
     int addNewTask(Task task);
@@ -22,11 +23,11 @@ public interface TaskManager {
 
     void deleteSubtaskById(int id);
 
-    ArrayList<Task> getTasks();
+    List<Task> getTasks();
 
-    ArrayList<Epic> getEpics();
+    List<Epic> getEpics();
 
-    ArrayList<Subtask> getSubtasks();
+    List<Subtask> getSubtasks();
 
     Task findTaskById(int id);
 
@@ -34,8 +35,8 @@ public interface TaskManager {
 
     Subtask findSubtaskById(int id);
 
-    ArrayList<Integer> findSubtasksByEpic(Epic epic);
-    ArrayList<Task>  getEpicSubtasks(int id);
+    List<Integer> findSubtasksByEpic(Epic epic);
+    List<Task>  getEpicSubtasks(int id);
 
     void updateTask(Task task);
 

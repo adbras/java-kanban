@@ -2,7 +2,7 @@ package manager;
 
 import java.util.ArrayList;
 
-public class inMemoryHistoryManager implements HistoryManager {
+public class InMemoryHistoryManager implements HistoryManager {
 
     private final ArrayList<Task> historyTasks = new ArrayList<>();
 
