@@ -1,7 +1,6 @@
 package manager;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Epic extends Task {
 
@@ -23,10 +22,10 @@ public class Epic extends Task {
     }
 
 
-    public void addSubtaskIdToEpics(int SubtaskId) {
+    public void addSubtaskIdToEpics(int subtaskId) {
         //System.out.println(idSubtaskEpics.equals(SubtaskId));
-        if (!idSubtaskEpics.contains(SubtaskId) && SubtaskId != getId()) {
-            idSubtaskEpics.add(SubtaskId);
+        if (!idSubtaskEpics.contains(subtaskId) && subtaskId != getId()) {
+            idSubtaskEpics.add(subtaskId);
         }
     }
 
