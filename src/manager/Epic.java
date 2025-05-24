@@ -23,9 +23,9 @@ public class Epic extends Task {
     }
 
 
-    public void addSubtaskIdToEpics (int SubtaskId) {
+    public void addSubtaskIdToEpics(int SubtaskId) {
         //System.out.println(idSubtaskEpics.equals(SubtaskId));
-        if (!idSubtaskEpics.contains(SubtaskId) && SubtaskId != getId()){
+        if (!idSubtaskEpics.contains(SubtaskId) && SubtaskId != getId()) {
             idSubtaskEpics.add(SubtaskId);
         }
     }

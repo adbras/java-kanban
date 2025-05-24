@@ -9,7 +9,6 @@ import java.util.ArrayList;
 class InMemoryHistoryManagerTest {
 
 
-
     @Test
     public void shouldNotUpdateTasksWhenAddHistory() {
         HistoryManager historyManager = Managers.getDefaultHistory();
@@ -27,7 +26,7 @@ class InMemoryHistoryManagerTest {
 
 
     @Test
-    public void shouldNotRemoveHistoryWhenAddTasks(){
+    public void shouldNotRemoveHistoryWhenAddTasks() {
         HistoryManager historyManager = Managers.getDefaultHistory();
 
         Task task1 = new Task(1, "task1", "desc1", Status.NEW);
@@ -40,7 +39,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void checkLastTaskAfterAddTask(){
+    public void checkLastTaskAfterAddTask() {
         HistoryManager historyManager = Managers.getDefaultHistory();
 
         Task task1 = new Task(1, "task1", "desc1", Status.NEW);

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class TaskTest {
 
     @Test
-    public void testEqualsById(){
+    public void testEqualsById() {
         Task task1 = new Task(1, "subtask1", "desc1", Status.NEW);
         Task task2 = new Task(1, "subtask2", "desc2", Status.NEW);
 

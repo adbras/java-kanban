@@ -28,6 +28,6 @@ class EpicTest {
         Epic epic1 = new Epic(1, "epic1", "desc1");
         epic1.addSubtaskIdToEpics(1);
 
-    Assertions.assertEquals(0, epic1.getIdSubtaskEpics().size(), "Эпик нельзя добавить в Сабтаск");
+        Assertions.assertEquals(0, epic1.getIdSubtaskEpics().size(), "Эпик нельзя добавить в Сабтаск");
     }
 }

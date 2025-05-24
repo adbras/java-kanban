@@ -14,12 +14,12 @@ class InMemoryTaskManagerTest {
     TaskManager manager;
 
     @BeforeEach
-    public void initManager (){
+    public void initManager() {
         manager = Managers.getDefault();
     }
 
     @Test
-    public void taskAddTask(){
+    public void taskAddTask() {
         Task task1 = new Task(1, "task1", "desc1", Status.NEW);
         manager.addNewTask(task1);
         Assertions.assertEquals(1, manager.getTasks().size(), "Таск не добавлен");
@@ -29,8 +29,8 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void checkNotChangeAfterAddNewTask(){
-        int id=1;
+    public void checkNotChangeAfterAddNewTask() {
+        int id = 1;
         String name = "Task1";
         String desc = "dec1";
         Status status = Status.NEW;
