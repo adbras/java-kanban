@@ -31,9 +31,9 @@ public interface TaskManager {
 
     Task findTaskById(int id);
 
-    Epic findEpicById(int id);
+    //Epic findEpicById(int id);
 
-    Subtask findSubtaskById(int id);
+    //Subtask findSubtaskById(int id);
 
     List<Integer> findSubtasksByEpic(Epic epic);
     List<Task>  getEpicSubtasks(int id);
@@ -44,5 +44,5 @@ public interface TaskManager {
 
     void updateEpicStatus(Epic epic);
 
-    ArrayList<Task> getHistory();
+    List<Task> getHistory();
 }

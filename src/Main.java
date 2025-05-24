@@ -36,10 +36,10 @@ public class Main {
         System.out.println("Все сабтаски: \n" + manager.getSubtasks());
         System.out.println("Поиск таска по ID: \n" + manager.findTaskById(3));
         System.out.println("Поиск таска по ID: \n" + manager.findTaskById(1));
-        System.out.println("Поиск эпика по ID: \n" + manager.findEpicById(4));
-        System.out.println("Поиск эпика по ID: \n" + manager.findEpicById(1));
-        System.out.println("Поиск подзадачи по ID: \n" + manager.findSubtaskById(4));
-        System.out.println("Поиск подзадачи по ID: \n" + manager.findSubtaskById(7));
+        //System.out.println("Поиск эпика по ID: \n" + manager.findEpicById(4));
+        //System.out.println("Поиск эпика по ID: \n" + manager.findEpicById(1));
+        //System.out.println("Поиск подзадачи по ID: \n" + manager.findSubtaskById(4));
+        //System.out.println("Поиск подзадачи по ID: \n" + manager.findSubtaskById(7));
 
 
         //3. получение всех подзадач определенного эпика

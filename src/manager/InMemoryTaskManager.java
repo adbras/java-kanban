@@ -2,6 +2,7 @@ package manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks = new HashMap<>();
@@ -157,7 +158,7 @@ public class InMemoryTaskManager implements TaskManager {
         return tasks.get(id);
     }
 
-    @Override
+    /*@Override
     public Epic findEpicById(int id) {
         historyManager.addTask(epics.get(id));
         return epics.get(id);
@@ -167,7 +168,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Subtask findSubtaskById(int id) {
         historyManager.addTask(subTasks.get(id));
         return subTasks.get(id);
-    }
+    }*/
 
 
     @Override
@@ -218,7 +219,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Task> getHistory() {
+    public List<Task> getHistory() {
         return historyManager.getHistory();
     }
 }
