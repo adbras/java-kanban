@@ -158,7 +158,7 @@ public class InMemoryTaskManager implements TaskManager {
         return tasks.get(id);
     }
 
-    /*@Override
+    @Override
     public Epic findEpicById(int id) {
         historyManager.addTask(epics.get(id));
         return epics.get(id);
@@ -168,7 +168,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Subtask findSubtaskById(int id) {
         historyManager.addTask(subTasks.get(id));
         return subTasks.get(id);
-    }*/
+    }
 
 
     @Override

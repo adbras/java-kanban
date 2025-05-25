@@ -23,8 +23,6 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node first;
     private Node last;
 
-    private final List<Task> historyTasks = new ArrayList<>();
-
     private void linkLast(Task task) {
         final Node node = new Node(task, last, null);
         if (last != null) {
