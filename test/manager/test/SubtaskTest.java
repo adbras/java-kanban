@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class SubtaskTest {
 
     @Test
-    public void testEqualsById(){
+    public void testEqualsById() {
         Subtask subtask1 = new Subtask(1, "subtask1", "desc1", Status.NEW, 1);
         Subtask subtask2 = new Subtask(1, "subtask1", "desc1", Status.NEW, 1);
 

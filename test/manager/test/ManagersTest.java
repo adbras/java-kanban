@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class ManagersTest {
 
     @Test
-    public void testDefaultManagersNotNull(){
+    public void testDefaultManagersNotNull() {
         Assertions.assertNotNull(Managers.getDefault());
         Assertions.assertNotNull(Managers.getDefaultHistory());
     }

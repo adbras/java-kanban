@@ -1,6 +1,5 @@
 package manager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
@@ -36,7 +35,8 @@ public interface TaskManager {
     Subtask findSubtaskById(int id);
 
     List<Integer> findSubtasksByEpic(Epic epic);
-    List<Task>  getEpicSubtasks(int id);
+
+    List<Task> getEpicSubtasks(int id);
 
     void updateTask(Task task);
 
@@ -44,5 +44,5 @@ public interface TaskManager {
 
     void updateEpicStatus(Epic epic);
 
-    ArrayList<Task> getHistory();
+    List<Task> getHistory();
 }
