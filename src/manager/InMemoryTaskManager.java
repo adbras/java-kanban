@@ -38,7 +38,7 @@ public class InMemoryTaskManager implements TaskManager {
         subTasks.put(subtask.getId(), subtask);
         System.out.println("Subtask added");
 
-        Epic epic = epics.get(subtask.epicId);
+        Epic epic = epics.get(subtask.getEpicId());
         if (epic.getId() != taskID) {
             epic.addSubtaskIdToEpics(taskID);
             updateEpicStatus(epic);
@@ -136,20 +136,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public ArrayList<Task> getTasks() {
-        ArrayList<Task> task = new ArrayList<Task>(tasks.values());
-        return task;
+        return new ArrayList<Task>(tasks.values());
     }
 
     @Override
     public ArrayList<Epic> getEpics() {
-        ArrayList<Epic> epic = new ArrayList<Epic>(epics.values());
-        return epic;
+        return new ArrayList<Epic>(epics.values());
     }
 
     @Override
     public ArrayList<Subtask> getSubtasks() {
-        ArrayList<Subtask> subtask = new ArrayList<Subtask>(subTasks.values());
-        return subtask;
+        return new ArrayList<Subtask>(subTasks.values());
     }
 
     @Override
