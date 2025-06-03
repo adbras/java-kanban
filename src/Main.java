@@ -18,7 +18,7 @@ public class Main {
                 System.out.println("Файл уже существует и содержит данные — загружаем менеджер из файла.");
                 backedTaskManager = FileBackedTaskManager.loadFromFile(tempFile);
             }
-        } catch (IOException e){
+        } catch (IOException e) {
 
             System.out.println("Ошибка при создании временного файла" + e.getMessage());
         }
@@ -104,7 +104,6 @@ public class Main {
 
         manager.deleteAllEpics(); //удаление всех эпиков
         InMemoryTaskManager.printAllTasks(manager);
-
 
 
     }
