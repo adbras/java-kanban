@@ -37,12 +37,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     private String toString(Task task) {
-        if (task instanceof Subtask) {
-            return String.format("%d,SUBTASK,%s,%s,%s,%d", task.getId(), task.getTaskName(), task.getStatus(), task.getDescription(), ((Subtask) task).getEpicId());
-        } else if (task instanceof Epic) {
-            return String.format("%d,EPIC,%s,%s,%s,", task.getId(), task.getTaskName(), task.getStatus(), task.getDescription());
-        } else {
-            return String.format("%d,TASK,%s,%s,%s,", task.getId(), task.getTaskName(), task.getStatus(), task.getDescription());
+        switch (task.getTaskType()) {
+            case TASK:
+                return String.format("%d,TASK,%s,%s,%s,", task.getId(), task.getTaskName(), task.getStatus(), task.getDescription());
+            case EPIC:
+                return String.format("%d,EPIC,%s,%s,%s,", task.getId(), task.getTaskName(), task.getStatus(), task.getDescription());
+            case SUBTASK:
+                return String.format("%d,SUBTASK,%s,%s,%s,%d", task.getId(), task.getTaskName(), task.getStatus(), task.getDescription(), ((Subtask) task).getEpicId());
+            default:
+                throw new IllegalArgumentException("Unknown task type");
         }
     }
 
@@ -80,12 +83,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             List<String> lines = Files.readAllLines(Paths.get(file.getPath()));
             for (String line : lines.subList(1, lines.size())) {
                 Task task = fromString(line);
-                if (task instanceof Epic) {
-                    manager.addNewEpic((Epic) task);
-                } else if (task instanceof Subtask) {
-                    manager.addNewSubtask((Subtask) task);
-                } else {
-                    manager.addNewTask(task);
+                switch (task.getTaskType()) {
+                    case TASK -> manager.addNewTask(task);
+                    case SUBTASK -> manager.addNewSubtask((Subtask) task);
+                    case EPIC -> manager.addNewEpic((Epic) task);
                 }
             }
         } catch (IOException e) {
