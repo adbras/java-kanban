@@ -69,4 +69,9 @@ public class Task {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+
+    public TaskType getTaskType() {
+        return TaskType.TASK;
+    }
 }

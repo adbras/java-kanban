@@ -15,8 +15,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int addNewTask(Task task) {
-        taskID++;
-        task.setId(taskID);
+        if (task.getId() == null) {
+            taskID++;
+            task.setId(taskID);
+        }
         tasks.put(task.getId(), task);
         System.out.println("com.Task added");
         return taskID;
@@ -24,8 +26,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int addNewEpic(Epic epic) {
-        taskID++;
-        epic.setId(taskID);
+        if (epic.getId() == null) {
+            taskID++;
+            epic.setId(taskID);
+        }
+
         epics.put(epic.getId(), epic);
         System.out.println("com.Epic added");
         return taskID;
@@ -33,12 +38,14 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int addNewSubtask(Subtask subtask) {
-        taskID++;
-        subtask.setId(taskID);
+        if (subtask.getId() == null) {
+            taskID++;
+            subtask.setId(taskID);
+        }
         subTasks.put(subtask.getId(), subtask);
         System.out.println("Subtask added");
 
-        Epic epic = epics.get(subtask.epicId);
+        Epic epic = epics.get(subtask.getEpicId());
         if (epic.getId() != taskID) {
             epic.addSubtaskIdToEpics(taskID);
             updateEpicStatus(epic);
@@ -136,20 +143,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public ArrayList<Task> getTasks() {
-        ArrayList<Task> task = new ArrayList<Task>(tasks.values());
-        return task;
+        return new ArrayList<Task>(tasks.values());
     }
 
     @Override
     public ArrayList<Epic> getEpics() {
-        ArrayList<Epic> epic = new ArrayList<Epic>(epics.values());
-        return epic;
+        return new ArrayList<Epic>(epics.values());
     }
 
     @Override
     public ArrayList<Subtask> getSubtasks() {
-        ArrayList<Subtask> subtask = new ArrayList<Subtask>(subTasks.values());
-        return subtask;
+        return new ArrayList<Subtask>(subTasks.values());
     }
 
     @Override
