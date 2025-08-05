@@ -13,7 +13,6 @@ public class InMemoryTaskManager implements TaskManager {
     private final Comparator<Task> taskComparator = Comparator.comparing(Task::getStartTime,
             Comparator.nullsFirst(Comparator.naturalOrder())).thenComparing(Task::getId);
     private final Map<Task, String> tasksSortedByTime = new TreeMap<>(taskComparator);
-    ;
 
 
     @Override
