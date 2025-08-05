@@ -284,5 +284,4 @@ public class InMemoryTaskManager implements TaskManager {
         return (task2Start.isBefore(task1Start) && task2End.isBefore(task1Start)) ||
                 task2Start.isAfter(task1End);
     }
-
 }
