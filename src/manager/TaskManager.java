@@ -45,4 +45,8 @@ public interface TaskManager {
     void updateEpicStatus(Epic epic);
 
     List<Task> getHistory();
+
+    List<Task> getPrioritizedTasks();
+
+    boolean checkCrossTime(Task t1, Task t2);
 }

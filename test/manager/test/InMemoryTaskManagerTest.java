@@ -1,15 +1,15 @@
 package manager.test;
-import manager.Managers;
-import manager.Status;
-import manager.Task;
-import manager.TaskManager;
+
+import manager.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.print.attribute.standard.MediaName;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
-class InMemoryTaskManagerTest {
+class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
     TaskManager manager;
 
@@ -20,7 +20,8 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void taskAddTask() {
-        Task task1 = new Task(1, "task1", "desc1", Status.NEW);
+        Task task1 = new Task("Task1", "Desc1", Status.NEW, Duration.ofMinutes(10),
+                LocalDateTime.of(2025, 6, 11, 11, 00));
         manager.addNewTask(task1);
         Assertions.assertEquals(1, manager.getTasks().size(), "Таск не добавлен");
         Task task2 = manager.getTasks().get(0);
@@ -34,7 +35,9 @@ class InMemoryTaskManagerTest {
         String name = "Task1";
         String desc = "dec1";
         Status status = Status.NEW;
-        Task task = new Task(id, name, desc, status);
+        Duration duration = Duration.ofMinutes(10);
+        LocalDateTime localDateTime = LocalDateTime.of(2025, 6, 11, 11, 00);
+        Task task = new Task(id, name, desc, status, duration, localDateTime);
         manager.addNewTask(task);
         Task taskAfter = manager.getTasks().get(0);
         Assertions.assertEquals(taskAfter.getId(), id);
