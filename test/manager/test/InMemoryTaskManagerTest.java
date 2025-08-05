@@ -6,16 +6,25 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.print.attribute.standard.MediaName;
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
     TaskManager manager;
+    private File tempFile;
 
     @BeforeEach
     public void initManager() {
         manager = Managers.getDefault();
+    }
+
+    @BeforeEach
+    void createFile() throws IOException {
+        tempFile = File.createTempFile("autosave", ".txt");
+        backedTaskManager = new FileBackedTaskManager(tempFile);
     }
 
     @Test

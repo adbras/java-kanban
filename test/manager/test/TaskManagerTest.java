@@ -1,4 +1,5 @@
 package manager.test;
+
 import manager.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -41,11 +42,11 @@ abstract class TaskManagerTest<T extends TaskManager> {
     public void testTaskIntervalOverlap() {
         LocalDateTime startTime1 = LocalDateTime.of(2025, 7, 11, 11, 00);
         Task task1 = new Task(1, "Task 1", "Description 1", Status.NEW,
-                 Duration.ofHours(1), startTime1);
+                Duration.ofHours(1), startTime1);
 
         LocalDateTime startTime2 = LocalDateTime.of(2025, 6, 11, 11, 00);
         Task task2 = new Task(2, "Task 2", "Description 2", Status.NEW,
-                 Duration.ofHours(1),startTime2);
+                Duration.ofHours(1), startTime2);
 
         backedTaskManager.addNewTask(task1);
         backedTaskManager.addNewTask(task2);
