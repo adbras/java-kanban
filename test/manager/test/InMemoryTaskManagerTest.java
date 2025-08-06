@@ -21,12 +21,6 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         manager = Managers.getDefault();
     }
 
-    @BeforeEach
-    void createFile() throws IOException {
-        tempFile = File.createTempFile("autosave", ".txt");
-        backedTaskManager = new FileBackedTaskManager(tempFile);
-    }
-
     @Test
     public void taskAddTask() {
         Task task1 = new Task("Task1", "Desc1", Status.NEW, Duration.ofMinutes(10),
@@ -53,6 +47,19 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         Assertions.assertEquals(taskAfter.getStatus(), status);
         Assertions.assertEquals(taskAfter.getTaskName(), name);
         Assertions.assertEquals(taskAfter.getDescription(), desc);
+    }
 
+    @Test
+    void shouldAddSubtaskToEpicAndLinkCorrectly() {
+        Epic epic = new Epic("Epic1", "Epic desc", Duration.ZERO, LocalDateTime.now());
+        manager.addNewEpic(epic);
+        int epicId = epic.getId();
+
+        Subtask sub = new Subtask("Subtask1", "Sub desc", Status.NEW, epicId, Duration.ofMinutes(30),
+                LocalDateTime.of(2025, 8, 10, 10, 0));
+        manager.addNewSubtask(sub);
+
+        Epic updatedEpic = manager.findEpicById(epicId);
+        Assertions.assertTrue(updatedEpic.getIdSubtaskEpics().contains(sub.getId()), "Subtask не прикреплён к эпику");
     }
 }

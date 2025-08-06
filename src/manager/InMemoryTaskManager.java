@@ -12,7 +12,7 @@ public class InMemoryTaskManager implements TaskManager {
     private int taskID = 0;
     private final Comparator<Task> taskComparator = Comparator.comparing(Task::getStartTime,
             Comparator.nullsFirst(Comparator.naturalOrder())).thenComparing(Task::getId);
-    private final Map<Task, String> tasksSortedByTime = new TreeMap<>(taskComparator);
+    private final Set<Task> tasksSortedByTime = new TreeSet<>(taskComparator);
 
 
     @Override
@@ -238,14 +238,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getPrioritizedTasks() {
-
-        List<Task> sortedTaskList = new ArrayList<>();
-
-        for (Map.Entry<Task, String> entry : tasksSortedByTime.entrySet()) {
-            sortedTaskList.addLast(entry.getKey());
-        }
-
-        return sortedTaskList;
+        return new ArrayList<>(tasksSortedByTime);
     }
 
     private void addTaskToSortedMap(Task task) {
@@ -255,16 +248,16 @@ public class InMemoryTaskManager implements TaskManager {
 
         LocalDateTime curentTime = LocalDateTime.now();
         if (tasksSortedByTime.isEmpty()) {
-            tasksSortedByTime.put(task, curentTime.format(Task.DATE_TIME_FORMATTER));
+            tasksSortedByTime.add(task);
             return;
         }
 
-        List<Task> crossTime = getPrioritizedTasks().stream()
-                .filter((Task existsTask) -> !checkCrossTime(task, existsTask))
+        List<Task> crossTime = tasksSortedByTime.stream()
+                .filter(existingTask -> !checkCrossTime(task, existingTask))
                 .toList();
 
         if (crossTime.isEmpty()) {
-            tasksSortedByTime.put(task, curentTime.format(Task.DATE_TIME_FORMATTER));
+            tasksSortedByTime.add(task);
         } else {
             System.out.println("Конфликт по времени \n " + task.toString());
         }

@@ -1,4 +1,5 @@
 package manager;
+
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.time.Duration;
@@ -8,14 +9,6 @@ public class Task {
     protected Integer id;
     public static final DateTimeFormatter DATE_TIME_FORMATTER =
             DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
-
-    public String getTaskName() {
-        return taskName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 
     protected String taskName;
     protected String description;
@@ -41,6 +34,13 @@ public class Task {
         this.startTime = startTime;
     }
 
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 
     public Integer getId() {
         return id;
@@ -48,31 +48,6 @@ public class Task {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", taskName='" + taskName + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", duration=" + duration +
-                ", startTime=" + startTime +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);  // возвращаем хэш по id
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;  // если ссылки одинаковые
-        if (o == null || getClass() != o.getClass()) return false;  // если объекты разных типов
-        Task task = (Task) o;  // приводим объект к типу Task
-        return Objects.equals(id, task.id);  // сравниваем id
     }
 
     public Status getStatus() {
@@ -106,5 +81,30 @@ public class Task {
 
     public LocalDateTime getEndTime() {
         return startTime.plus(duration);
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", taskName='" + taskName + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", duration=" + duration +
+                ", startTime=" + startTime +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);  // возвращаем хэш по id
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;  // если ссылки одинаковые
+        if (o == null || getClass() != o.getClass()) return false;  // если объекты разных типов
+        Task task = (Task) o;  // приводим объект к типу Task
+        return Objects.equals(id, task.id);  // сравниваем id
     }
 }
