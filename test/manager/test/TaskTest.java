@@ -1,8 +1,7 @@
 package manager.test;
 
 import manager.Status;
-import manager.Subtask;
-import manager.Task;
+import tasks.Task;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

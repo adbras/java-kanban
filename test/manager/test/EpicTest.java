@@ -2,7 +2,7 @@ package manager.test;
 
 import org.junit.jupiter.api.Assertions;
 
-import manager.Epic;
+import tasks.Epic;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;

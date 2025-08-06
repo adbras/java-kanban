@@ -1,5 +1,9 @@
 package manager;
 
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
+
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -140,7 +144,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteSubtaskById(int id) {
-        int epicId = subTasks.get(id).epicId;
+        int epicId = subTasks.get(id).getEpicId();
         updateEpicStatus(epics.get(epicId));
         subTasks.remove(id);
         System.out.println("Сабтаск удален, статус эпика обновлен!");
@@ -197,7 +201,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void updateSubtask(Subtask subtask) {
         subTasks.put(subtask.getId(), subtask);
-        updateEpicStatus(epics.get(subtask.epicId));
+        updateEpicStatus(epics.get(subtask.getEpicId()));
 
         addTaskToSortedMap(subtask);
     }

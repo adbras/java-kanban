@@ -1,4 +1,7 @@
-package manager;
+package tasks;
+
+import manager.Status;
+import manager.TaskType;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
