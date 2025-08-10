@@ -1,3 +1,4 @@
+import HTTP.HttpTaskServer;
 import manager.*;
 import tasks.Epic;
 import tasks.Subtask;
@@ -110,7 +111,8 @@ public class Main {
         InMemoryTaskManager.printAllTasks(manager);//проверка вывода
         System.out.println("*************************************************************************************************************");
 
-
+        HttpTaskServer httpTaskServer = new HttpTaskServer(Managers.getDefault());
+        httpTaskServer.startServer();
     }
 
 
