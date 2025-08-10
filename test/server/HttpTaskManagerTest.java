@@ -1,6 +1,6 @@
 package server;
 
-import HTTP.HttpTaskServer;
+import http.HttpTaskServer;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

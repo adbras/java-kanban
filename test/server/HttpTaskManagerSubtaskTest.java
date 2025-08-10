@@ -1,22 +1,18 @@
 package server;
 
-import HTTP.HttpTaskServer;
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
+import http.HttpTaskServer;
 import manager.Managers;
 import manager.TaskManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import tasks.Subtask;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,4 +1,4 @@
-package HTTP;
+package http;
 
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpServer;
@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import manager.TaskManager;
 import handler.*;
 import adapters.*;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.time.Duration;
@@ -15,6 +16,7 @@ public class HttpTaskServer {
     private static final int PORT = 8080;
     private static TaskManager manager;
     private static HttpServer server;
+
     public HttpTaskServer(TaskManager manager) throws IOException {
         Gson gson = getGson();
         HttpTaskServer.manager = manager;
@@ -27,12 +29,14 @@ public class HttpTaskServer {
         server.createContext("/prioritized", new PrioritizedHandler(gson, manager));
 
     }
-  public static Gson getGson() {
+
+    public static Gson getGson() {
         return new GsonBuilder()
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                 .registerTypeAdapter(Duration.class, new DurationAdapter())
                 .create();
     }
+
     public void startServer() {
         server.start();
         System.out.println("HTTP сервер запущен. Порт:" + PORT);

@@ -1,6 +1,6 @@
 package server;
 
-import HTTP.HttpTaskServer;
+import http.HttpTaskServer;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import manager.Managers;
