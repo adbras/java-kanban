@@ -68,14 +68,20 @@ public class BaseHttpHandler implements HttpHandler {
         h.close();
     }
 
-    private void parseTaskPostRequest(HttpExchange exchange) throws IOException {
+    protected Task parseTaskPostRequest(HttpExchange exchange) throws IOException {
         InputStream inputStream = exchange.getRequestBody();
         String jsonString = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         if (jsonString.isEmpty()) {
             sendLengthRequired(exchange);
+            return null;
+        }
+        return gson.fromJson(jsonString, Task.class);
+    }
+
+    protected void createOrUpdate(HttpExchange exchange, Task task) throws IOException {
+        if (task == null) {
             return;
         }
-        Task task = gson.fromJson(jsonString, Task.class);
         if (task.getId() == 0) {
             createTask(exchange, task);
         } else {

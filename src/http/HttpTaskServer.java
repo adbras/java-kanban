@@ -14,12 +14,10 @@ import java.time.LocalDateTime;
 
 public class HttpTaskServer {
     private static final int PORT = 8080;
-    private static TaskManager manager;
     private static HttpServer server;
 
     public HttpTaskServer(TaskManager manager) throws IOException {
         Gson gson = getGson();
-        HttpTaskServer.manager = manager;
         server = HttpServer.create(new InetSocketAddress(PORT), 5);
 
         server.createContext("/tasks", new TaskHandler(gson, manager));

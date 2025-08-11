@@ -83,8 +83,11 @@ public class SubtaskHandler extends BaseHttpHandler {
     }
 
     private void updateSubtask(HttpExchange exchange, Subtask subTask) throws IOException {
-
-        manager.updateSubtask(subTask);
-        sendSuccessfully(exchange, "Подзадача обновлена успешно!", 201);
+        try {
+            manager.updateSubtask(subTask);
+            sendSuccessfully(exchange, "Подзадача обновлена успешно!", 201);
+        } catch (IllegalArgumentException e) {
+            sendError(exchange, e.getMessage(), 409);
+        }
     }
 }
