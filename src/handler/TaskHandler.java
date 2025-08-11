@@ -6,8 +6,6 @@ import manager.TaskManager;
 import tasks.Task;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -51,6 +49,7 @@ public class TaskHandler extends BaseHttpHandler {
             }
         }
     }
+
     private void updateTask(HttpExchange exchange, Task task) throws IOException {
         try {
             manager.updateTask(task);
@@ -70,5 +69,4 @@ public class TaskHandler extends BaseHttpHandler {
         sendSuccessfullyDefault(exchange, "Задача удалена успешно!");
     }
 }
-
 
