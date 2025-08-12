@@ -1,9 +1,16 @@
 package manager;
 
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
@@ -15,7 +22,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void save() {
         StringBuilder sb = new StringBuilder();
-        sb.append("id,type,name,status,description,epic \n");
+        sb.append("id,type,name,status,description,epic,duration, startTime \n");
 
         for (Task task : getTasks()) {
             sb.append(toString(task)).append("\n");
@@ -39,11 +46,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private String toString(Task task) {
         switch (task.getTaskType()) {
             case TASK:
-                return String.format("%d,TASK,%s,%s,%s,", task.getId(), task.getTaskName(), task.getStatus(), task.getDescription());
+                return String.format("%d,TASK,%s,%s,%s,%s,%s,", task.getId(), task.getTaskName(), task.getStatus(), task.getDescription(), task.getDuration(), task.getStartTime());
             case EPIC:
-                return String.format("%d,EPIC,%s,%s,%s,", task.getId(), task.getTaskName(), task.getStatus(), task.getDescription());
+                return String.format("%d,EPIC,%s,%s,%s,%s,%s,", task.getId(), task.getTaskName(), task.getStatus(), task.getDescription(), task.getDuration(), task.getStartTime());
             case SUBTASK:
-                return String.format("%d,SUBTASK,%s,%s,%s,%d", task.getId(), task.getTaskName(), task.getStatus(), task.getDescription(), ((Subtask) task).getEpicId());
+                return String.format("%d,SUBTASK,%s,%s,%s,%s,%s,%d,", task.getId(), task.getTaskName(), task.getStatus(), task.getDescription(), task.getDuration(), task.getStartTime(), ((Subtask) task).getEpicId());
             default:
                 throw new IllegalArgumentException("Unknown task type");
         }
@@ -57,18 +64,20 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String statusBeforeEnum = fields[3];
         Status status = Status.valueOf(statusBeforeEnum);
         String description = fields[4];
-        int epicId = type.equals("SUBTASK") ? Integer.parseInt(fields[5]) : -1;
+        LocalDateTime startTime = LocalDateTime.parse(fields[6], DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy"));
+        Duration duration = Duration.ofMinutes(Long.parseLong(fields[7]));
 
         Task task;
         switch (type) {
             case "TASK":
-                task = new Task(id, name, description, status);
+                task = new Task(id, name, description, status, duration, startTime);
                 break;
             case "EPIC":
-                task = new Epic(id, name, description);
+                task = new Epic(id, name, description, duration, startTime);
                 break;
             case "SUBTASK":
-                task = new Subtask(id, name, description, status, epicId);
+                int epicId = Integer.parseInt(fields[7]);
+                task = new Subtask(id, name, description, status, epicId, duration, startTime);
                 task.setId(id);
                 break;
             default:

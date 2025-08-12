@@ -1,5 +1,9 @@
 package manager;
 
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
+
 import java.util.List;
 
 public interface TaskManager {
@@ -45,4 +49,8 @@ public interface TaskManager {
     void updateEpicStatus(Epic epic);
 
     List<Task> getHistory();
+
+    List<Task> getPrioritizedTasks();
+
+    boolean checkCrossTime(Task t1, Task t2);
 }

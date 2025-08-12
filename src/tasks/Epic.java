@@ -1,19 +1,22 @@
-package manager;
+package tasks;
 
+import manager.Status;
+import manager.TaskType;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Epic extends Task {
-
-
     protected ArrayList<Integer> idSubtaskEpics = new ArrayList<>();
 
-    public Epic(String name, String description) {
-        super(name, description, Status.NEW);
+    public Epic(String name, String description, Duration duration, LocalDateTime startTime) {
+        super(name, description, Status.NEW, duration, startTime);
         this.id = null;
     }
 
-    public Epic(int id, String name, String description) {
-        super(name, description, Status.NEW);
+    public Epic(int id, String name, String description, Duration duration, LocalDateTime startTime) {
+        super(name, description, Status.NEW, duration, startTime);
         this.id = id;
     }
 
@@ -23,7 +26,6 @@ public class Epic extends Task {
 
 
     public void addSubtaskIdToEpics(int subtaskId) {
-        //System.out.println(idSubtaskEpics.equals(SubtaskId));
         if (!idSubtaskEpics.contains(subtaskId) && subtaskId != getId()) {
             idSubtaskEpics.add(subtaskId);
         }
@@ -33,5 +35,4 @@ public class Epic extends Task {
     public TaskType getTaskType() {
         return TaskType.EPIC;
     }
-
 }

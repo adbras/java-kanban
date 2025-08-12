@@ -1,7 +1,13 @@
+import http.HttpTaskServer;
 import manager.*;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -25,12 +31,18 @@ public class Main {
 
         TaskManager manager = Managers.getDefault();
 
-        Task task1 = new Task("Task1", "Desc1", Status.NEW);
-        Task task2 = new Task("Task2", "Desc2", Status.IN_PROGRESS);
-        Task task3 = new Task("Task3", "Desc3", Status.DONE);
-        Epic epic1 = new Epic("Epic1", "desc1");
-        Epic epic2 = new Epic("Epic2", "desc2");
-        Epic epic3 = new Epic("Epic3", "desc3");
+        Task task1 = new Task("Task1", "Desc1", Status.NEW, Duration.ofMinutes(10),
+                LocalDateTime.of(2025, 6, 11, 11, 00));
+        Task task2 = new Task("Task2", "Desc2", Status.IN_PROGRESS, Duration.ofMinutes(20),
+                LocalDateTime.of(2025, 6, 12, 11, 00));
+        Task task3 = new Task("Task3", "Desc3", Status.DONE, Duration.ofMinutes(30),
+                LocalDateTime.of(2025, 6, 13, 11, 00));
+        Epic epic1 = new Epic("Epic1", "desc1", Duration.ofMinutes(100),
+                LocalDateTime.of(2025, 6, 21, 11, 00));
+        Epic epic2 = new Epic("Epic2", "desc2", Duration.ofMinutes(200),
+                LocalDateTime.of(2025, 6, 22, 11, 00));
+        Epic epic3 = new Epic("Epic3", "desc3", Duration.ofMinutes(300),
+                LocalDateTime.of(2025, 6, 23, 11, 00));
 
 
         backedTaskManager.addNewTask(task1);
@@ -46,9 +58,12 @@ public class Main {
         manager.addNewEpic(epic2);
         manager.addNewEpic(epic3);
 
-        Subtask subtask1 = new Subtask("Subtask1", "desc1", Status.NEW, idEpic1);
-        Subtask subtask2 = new Subtask("Subtask2", "desc2", Status.NEW, idEpic1);
-        Subtask subtask3 = new Subtask("Subtask3", "desc3", Status.DONE, idEpic3);
+        Subtask subtask1 = new Subtask("Subtask1", "desc1", Status.NEW, idEpic1, Duration.ofMinutes(60),
+                LocalDateTime.of(2025, 6, 12, 11, 00));
+        Subtask subtask2 = new Subtask("Subtask2", "desc2", Status.NEW, idEpic1, Duration.ofMinutes(60),
+                LocalDateTime.of(2025, 6, 12, 11, 00));
+        Subtask subtask3 = new Subtask("Subtask3", "desc3", Status.DONE, idEpic3, Duration.ofMinutes(60),
+                LocalDateTime.of(2025, 6, 12, 11, 00));
         backedTaskManager.addNewSubtask(subtask1);
         backedTaskManager.addNewSubtask(subtask2);
         backedTaskManager.addNewSubtask(subtask3);
@@ -74,38 +89,30 @@ public class Main {
         //1. обновление таска
         System.out.println("До обновления:");
         InMemoryTaskManager.printAllTasks(manager);
-        Task task4 = new Task(1, "task1", "desc1.2", Status.DONE);
+        Task task4 = new Task(1, "task1", "desc1.2", Status.DONE, Duration.ofMinutes(60),
+                LocalDateTime.of(2025, 6, 12, 11, 00)
+        );
         manager.updateTask(task4);
         System.out.println("После обновления:");
         InMemoryTaskManager.printAllTasks(manager);
 
         //2. обновление статуса подзадачи/эпика
-        manager.updateSubtask(new Subtask(7, "subtask7", "desc7", Status.IN_PROGRESS, 4));
-        manager.updateSubtask(new Subtask(8, "subtask8", "desc8", Status.IN_PROGRESS, 4));
-        manager.updateSubtask(new Subtask(9, "subtask9", "desc9", Status.NEW, 6));
+        manager.updateSubtask(new Subtask(7, "subtask7", "desc7", Status.IN_PROGRESS, 4, Duration.ofMinutes(60),
+                LocalDateTime.of(2025, 6, 12, 11, 00)));
+        manager.updateSubtask(new Subtask(8, "subtask8", "desc8", Status.IN_PROGRESS, 4, Duration.ofMinutes(60),
+                LocalDateTime.of(2025, 6, 12, 11, 00)));
+        manager.updateSubtask(new Subtask(9, "subtask9", "desc9", Status.NEW, 6, Duration.ofMinutes(60),
+                LocalDateTime.of(2025, 6, 12, 11, 00)));
 
-        //ВСЕ МЕТОДЫ УДАЛЕНИЯ
-        //1. удаление
-        InMemoryTaskManager.printAllTasks(manager);
-        backedTaskManager.deleteTaskById(1); //удаление таска по Айди
+        System.out.println("Сортировка по приоритетам*************************************************************************************************************");
+        manager.getPrioritizedTasks()
+                .forEach((Task t) -> System.out.println(t.toString()));
+        System.out.println("*************************************************************************************************************");
         InMemoryTaskManager.printAllTasks(manager);//проверка вывода
-        manager.deleteAllTasks(); //удаление всех тасков
-        InMemoryTaskManager.printAllTasks(manager);
+        System.out.println("*************************************************************************************************************");
 
-        backedTaskManager.deleteSubtaskById(7); //удаление сабтасков по Айди и обновление статуса эпика
-        InMemoryTaskManager.printAllTasks(manager);
-        manager.deleteAllSubtasks(); //удаление всех сабтасков
-        InMemoryTaskManager.printAllTasks(manager);
-
-
-        backedTaskManager.deleteEpicById(4); //удаление эпика по айди
-        InMemoryTaskManager.printAllTasks(manager);
-
-
-        manager.deleteAllEpics(); //удаление всех эпиков
-        InMemoryTaskManager.printAllTasks(manager);
-
-
+        HttpTaskServer httpTaskServer = new HttpTaskServer(Managers.getDefault());
+        httpTaskServer.startServer();
     }
 
 

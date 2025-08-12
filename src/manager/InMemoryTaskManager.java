@@ -1,8 +1,11 @@
 package manager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
+
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks = new HashMap<>();
@@ -11,6 +14,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     private final HistoryManager historyManager = Managers.getDefaultHistory();
     private int taskID = 0;
+    private final Comparator<Task> taskComparator = Comparator.comparing(Task::getStartTime,
+            Comparator.nullsFirst(Comparator.naturalOrder())).thenComparing(Task::getId);
+    private final Set<Task> tasksSortedByTime = new TreeSet<>(taskComparator);
 
 
     @Override
@@ -20,7 +26,7 @@ public class InMemoryTaskManager implements TaskManager {
             task.setId(taskID);
         }
         tasks.put(task.getId(), task);
-        System.out.println("com.Task added");
+        addTaskToSortedMap(task);
         return taskID;
     }
 
@@ -32,7 +38,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         epics.put(epic.getId(), epic);
-        System.out.println("com.Epic added");
+        addTaskToSortedMap(epic);
         return taskID;
     }
 
@@ -50,6 +56,7 @@ public class InMemoryTaskManager implements TaskManager {
             epic.addSubtaskIdToEpics(taskID);
             updateEpicStatus(epic);
         }
+        addTaskToSortedMap(subtask);
         return taskID;
 
     }
@@ -96,12 +103,14 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteAllTasks() {
         tasks.clear();
+        tasksSortedByTime.clear();
         System.out.println("Все Таски удалены!");
     }
 
     @Override
     public void deleteTaskById(int id) {
-        tasks.remove(id);
+        Task task = tasks.remove(id);
+        tasksSortedByTime.remove(task);
         System.out.println("Таск по ID " + id + " удален!");
     }
 
@@ -116,7 +125,8 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteEpicById(int id) {
         ArrayList<Integer> idSubtasks = epics.get(id).getIdSubtaskEpics();
         for (int i : idSubtasks) {
-            subTasks.remove(i);
+            Task task = subTasks.remove(i);
+            tasksSortedByTime.remove(task);
         }
         epics.remove(id);
 
@@ -134,7 +144,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteSubtaskById(int id) {
-        int epicId = subTasks.get(id).epicId;
+        int epicId = subTasks.get(id).getEpicId();
         updateEpicStatus(epics.get(epicId));
         subTasks.remove(id);
         System.out.println("Сабтаск удален, статус эпика обновлен!");
@@ -184,13 +194,16 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void updateTask(Task task) {
         tasks.put(task.getId(), task);
+        addTaskToSortedMap(task);
         System.out.println(tasks);
     }
 
     @Override
     public void updateSubtask(Subtask subtask) {
         subTasks.put(subtask.getId(), subtask);
-        updateEpicStatus(epics.get(subtask.epicId));
+        updateEpicStatus(epics.get(subtask.getEpicId()));
+
+        addTaskToSortedMap(subtask);
     }
 
     @Override
@@ -225,5 +238,46 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
+    }
+
+    @Override
+    public List<Task> getPrioritizedTasks() {
+        return new ArrayList<>(tasksSortedByTime);
+    }
+
+    private void addTaskToSortedMap(Task task) {
+        if (task.getStartTime() == null) {
+            return;
+        }
+
+        LocalDateTime curentTime = LocalDateTime.now();
+        if (tasksSortedByTime.isEmpty()) {
+            tasksSortedByTime.add(task);
+            return;
+        }
+
+        List<Task> crossTime = tasksSortedByTime.stream()
+                .filter(existingTask -> !checkCrossTime(task, existingTask))
+                .toList();
+
+        if (crossTime.isEmpty()) {
+            tasksSortedByTime.add(task);
+        } else {
+            System.out.println("Конфликт по времени \n " + task.toString());
+        }
+    }
+
+    @Override
+    public boolean checkCrossTime(Task task1, Task task2) {
+        if (task1.equals(task2)) {
+            return true;
+        }
+        LocalDateTime task1Start = task1.getStartTime();
+        LocalDateTime task1End = task1.getEndTime();
+        LocalDateTime task2Start = task2.getStartTime();
+        LocalDateTime task2End = task2.getEndTime();
+
+        return (task2Start.isBefore(task1Start) && task2End.isBefore(task1Start)) ||
+                task2Start.isAfter(task1End);
     }
 }
